@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>My Notes</h1>
+    <div class="notes-part">
+      <form v-on:submit.prevent>
+        <input type="text" v-model="newItem">
+        <button v-on:click="addItem">create</button>
+      </form>
+      <ul>
+        <li v-for="(note, index) in notes">{{ note.title }}
+          <div v-on:click="deleteItem(index)" class="delete"><img src="img/delete-icon.png" alt=""></div>
+        </li>
+        <pre> {{ $data }} </pre>
+      </ul>
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        newItem: "",
+        notes: [
+          title = ""
+        ]
+      },
+      watch: {
+        notes: function () {
+          // notesの値が変わったときに動く関数
+        }
+      },
+      mounted: function () {
+        this.notes = JSON.parse(localStorage.getItem('notes')) || [];
+      },
+      methods: {
+        addItem: function () {
+          var item = {
+            title: this.newItem,
+            isDone: false
+          };
+          this.notes.push(item);
+          this.setItems();
+          this.newItem = '';
+        },
+        deleteItem: function (index) {
+          if (confirm('Are you sure?')) {
+            this.notes.splice(index, 1);
+            this.setItems();
+          };
+        },
+        setItems() {
+          localStorage.setItem('notes', JSON.stringify(this.notes));
+        }
+      },
+      purge: function () {
+        if (!confirm('Delete finished?')) {
+          return;
+        }
+        this.notes = this.remaining;
+      },
+      //わかりやすい動詞を使う。目的語を変える。
+      computed: {
+        remaining: function () {
+          return this.notes.filter(function (notes) {
+            return !notes.isDone;
+          });
+        }
+      },
+    });
+  </script>
+</body>
+
+</html>
