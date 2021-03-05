@@ -33,9 +33,7 @@
         ]
       },
       watch: {
-        notes: function () {
-          // notesの値が変わったときに動く関数
-        }
+        notes: function () {}
       },
       mounted: function () {
         this.notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -60,13 +58,6 @@
           localStorage.setItem('notes', JSON.stringify(this.notes));
         }
       },
-      purge: function () {
-        if (!confirm('Delete finished?')) {
-          return;
-        }
-        this.notes = this.remaining;
-      },
-      //わかりやすい動詞を使う。目的語を変える。
       computed: {
         remaining: function () {
           return this.notes.filter(function (notes) {
