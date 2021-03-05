@@ -20,7 +20,6 @@
         <li v-for="(note, index) in notes">{{ note.title }}
           <div v-on:click="deleteItem(index)" class="delete"><img src="img/delete-icon.png" alt=""></div>
         </li>
-        <pre> {{ $data }} </pre>
       </ul>
     </div>
   </div>
